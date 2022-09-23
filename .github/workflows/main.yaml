@@ -1,10 +1,10 @@
-name : vercel-deploy
+name: vercel-deploy
 
 on:
   push:
     branches:
       - main
-      
+
 jobs:
   test:
     name: Testing of the code
@@ -13,23 +13,23 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install packages
         run: npm i
-      - name: Run tests 
+      - name: Run tests
         run: npm run test
-        
+
   vercel:
     needs: [test]
-    name: "Deploy front-end" 
+    name: "Deploy front-end"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '16.17'
+          node-version: "16.17"
           registry-url: https://registry.npmjs.org/
 
       - name: "Deploy to Vercel"
-        run: npx vercel --token ${VERCEL_TOKEN} --prod
+        run: npx vercel --token ${VERCELTOKEN} --prod
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}       
+          VERCEL_TOKEN: ${{ secrets.VERCELTOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_OR }}
